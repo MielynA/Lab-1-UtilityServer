@@ -1,0 +1,14 @@
+{
+  "name": "utilityserver",
+  "version": "1.0.0",
+  "description": "lab-1 utilityServer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mielyn Acosta",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
