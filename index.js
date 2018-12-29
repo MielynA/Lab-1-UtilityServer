@@ -1,6 +1,6 @@
 const express = require('express');
 const math = require('./math');
-//const giphy = require('./giphy');
+const giphy = require('./giphy');
 const app = express();
 //-- Main page 
 app.get('/', (req, res) => {
@@ -17,30 +17,36 @@ app.get('/math', (req, res) => {
 });
 //-- Math add page
 app.get('/math/add', (req, res) => {
-    let sum = 0;
+    let keyValue = Object.values(req.query);
+    let ObjectKeys = Object.keys(req.query);
+    let sum = {}
+    let addition = 0;
     let sumString = '';
-
-    let keyValue = Object.values(query)
     for (let i = 0; i < keyValue.length; i++) {
-        const KeyValueI = keyValue[i]
-        sum += parseInt(KeyValueI);
-        if (isNaN(KeyValueI)) {
+        sum[ObjectKeys[i]] = parseInt([keyValue[i]]);
+        
+        if (i !== keyValue.length - 1) {
+            sumString += `${keyValue[i]} + `;
+
+        } else {
+            sumString += `${keyValue[i]}`;
+        }
+        addition = math.add(keyValue[i], addition);
+       
+        if (isNaN(keyValue[i])) {
             res.json({
                 'error!': 'You passed a non-number value into the parameters.'
             })
             return;
-        } else if (i + 1 != keyValue.length) {
-            sumString += KeyValueI + ' + ';
-
-        } else {
-            sumString += KeyValueI;
         }
+       
     }
+   // addition = math.add(sum["a"],sum["b"]);
     res.json({
-        input: query,
+        input: sum,
         sumString: sumString,
-        sum: sum,
-    })
+        sum: addition,
+    });
 
 });
 //-- Math subtract page
@@ -134,6 +140,9 @@ app.get('/math/divide', (req, res) => {
         'quotient': quotient,
     }, );
 });
+
+
+//app.get()
 
 app.listen(process.env.PORT || 3000)
 console.log(`listening..`)
