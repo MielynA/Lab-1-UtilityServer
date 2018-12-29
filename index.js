@@ -1,19 +1,15 @@
 const express = require('express');
+const request = require('request');
 const math = require('./math');
 const giphy = require('./giphy');
 const app = express();
 //-- Main page 
 app.get('/', (req, res) => {
-    console.log("hey we got this Mie");
-    res.json({
-        "message": ' you are on the main page index (utility server)',
-    });
+    res.json({ message: ' you are on the main page index (utility server)',});
 });
 //-- Math page
 app.get('/math', (req, res) => {
-    res.json({
-        "message": ' you are on the math page',
-    });
+    res.json({ message: ' you are on the math page',});
 });
 //-- Math add page
 app.get('/math/add', (req, res) => {
@@ -27,26 +23,18 @@ app.get('/math/add', (req, res) => {
         
         if (i !== keyValue.length - 1) {
             sumString += `${keyValue[i]} + `;
-
         } else {
             sumString += `${keyValue[i]}`;
         }
         addition = math.add(keyValue[i], addition);
        
         if (isNaN(keyValue[i])) {
-            res.json({
-                'error!': 'You passed a non-number value into the parameters.'
-            })
+            res.json({'error!': 'You passed a non-number value into the parameters.'})
             return;
-        }
-       
+        }     
     }
    // addition = math.add(sum["a"],sum["b"]);
-    res.json({
-        input: sum,
-        sumString: sumString,
-        sum: addition,
-    });
+    res.json({input: sum, sumString: sumString,sum: addition, });
 
 });
 //-- Math subtract page
@@ -66,19 +54,13 @@ app.get('/math/subtract', (req, res) => {
         }
         difference = math.subtract(keyValue[i], difference);
         if (isNaN(keyValue[i])) {
-            res.json({
-                'error!': 'You passed a non-number value into the parameters.'
-            })
+            res.json({ 'error!': 'You passed a non-number value into the parameters.'})
             return;
         }
     }
 
 
-    res.json({
-        input: diff,
-        subtractString: subtractString,
-        diff: difference,
-    });
+    res.json({ input: diff, subtractString: subtractString, diff: difference,});
 });
 //-- Math multiply page
 app.get('/math/multiply', (req, res) => {
@@ -97,18 +79,12 @@ app.get('/math/multiply', (req, res) => {
 
         product = math.multiply(keyValue[i], product)
         if (isNaN(keyValue[i])) {
-            res.json({
-                'error!': 'You passed a non-number value into the parameters.'
-            })
+            res.json({'error!': 'You passed a non-number value into the parameters.'})
             return;
         }
     }
 
-    res.json({
-        input: multiple,
-        prodString: prodString,
-        product: product,
-    });
+    res.json({ input: multiple, prodString: prodString, product: product, });
 });
 //-- Math divide page
 app.get('/math/divide', (req, res) => {
@@ -127,22 +103,34 @@ app.get('/math/divide', (req, res) => {
         }
         quotient = math.divide(keyValue[i], quotient)
         if (isNaN(keyValue[i])) {
-            res.json({
-                'error!': 'You passed a non-number value into the parameters.'
-            })
+            res.json({'error!': 'You passed a non-number value into the parameters.' })
             return;
         }
     }
     //quotient = math.divide(div["a"],div["b"]);
-    res.json({
-        'input': div,
-        'divString': divString,
-        'quotient': quotient,
-    }, );
+    res.json({input: div, divString: divString, quotient: quotient,});
 });
 
 
-//app.get()
+app.get('/gif/', (req,res) =>{
+    const API_KEY = 'siIyo4w5mg0REENX76Sr57QTgkt3BWvY';
+    let gifResult = []; 
+    request.get({
+        url: `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${req.query.search}`,
+    }, function (err, httpResponse, body) {
+        if(!err && res.statusCode === 200){
+        const result = JSON.parse(body);
+        for (let i = 0; i < result.data.length; i++) {
+            let url = result.data[i].images.original.url
+            gifResult.push(url);
+        }
+        res.json({gifResult,});
+    } else {
+        res.json({ 'error': 'Empty or Invalid parameter'})
+     } 
+  });
+  
+});
 
 app.listen(process.env.PORT || 3000)
 console.log(`listening..`)
