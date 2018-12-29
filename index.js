@@ -25,14 +25,14 @@ app.get('/math/add', (req, res) => {
         } else {
             sumString += `${keyValue[i]}`;
         }
-        addition = math.add(keyValue[i], addition);
+        // addition = math.add(keyValue[i], addition);
        
         if (isNaN(keyValue[i])) {
             res.json({'error!': 'You passed a non-number value into the parameters.'})
             return;
         }     
     }
-   // addition = math.add(sum["a"],sum["b"]);
+   addition = math.add(sum["a"],sum["b"]);
     res.json({input: sum, sumString: sumString,sum: addition, });
 
 });
@@ -57,8 +57,6 @@ app.get('/math/subtract', (req, res) => {
             return;
         }
     }
-
-
     res.json({ input: diff, subtractString: subtractString, diff: difference,});
 });
 //-- Math multiply page
@@ -109,7 +107,6 @@ app.get('/math/divide', (req, res) => {
     //quotient = math.divide(div["a"],div["b"]);
     res.json({input: div, divString: divString, quotient: quotient,});
 });
-
 
 app.get('/gif/', (req,res) =>{
     const API_KEY = 'siIyo4w5mg0REENX76Sr57QTgkt3BWvY';
