@@ -1,7 +1,6 @@
 const express = require('express');
 const request = require('request');
 const math = require('./math');
-const giphy = require('./giphy');
 const app = express();
 //-- Main page 
 app.get('/', (req, res) => {
