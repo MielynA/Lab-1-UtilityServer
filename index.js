@@ -18,21 +18,20 @@ app.get('/math/add', (req, res) => {
     let addition = 0;
     let sumString = '';
     for (let i = 0; i < keyValue.length; i++) {
-        sum[ObjectKeys[i]] = parseInt([keyValue[i]]);
-        
+        sum[ObjectKeys[i]] = parseInt([keyValue[i]]); 
         if (i !== keyValue.length - 1) {
             sumString += `${keyValue[i]} + `;
         } else {
             sumString += `${keyValue[i]}`;
         }
-        // addition = math.add(keyValue[i], addition);
-       
+        addition = math.add(parseInt(keyValue[i]), addition);
+        
         if (isNaN(keyValue[i])) {
             res.json({'error!': 'You passed a non-number value into the parameters.'})
             return;
         }     
     }
-   addition = math.add(sum["a"],sum["b"]);
+   //addition = math.add(sum["a"],sum["b"]);
     res.json({input: sum, sumString: sumString,sum: addition, });
 
 });
@@ -51,7 +50,7 @@ app.get('/math/subtract', (req, res) => {
         } else {
             subtractString += `${keyValue[i]}`;
         }
-        difference = math.subtract(keyValue[i], difference);
+        difference = math.subtract(parseInt(keyValue[i]), difference);
         if (isNaN(keyValue[i])) {
             res.json({ 'error!': 'You passed a non-number value into the parameters.'})
             return;
@@ -74,7 +73,7 @@ app.get('/math/multiply', (req, res) => {
             prodString += `${keyValue[i]}`;
         }
 
-        product = math.multiply(keyValue[i], product)
+        product = math.multiply(parseInt(keyValue[i]), product)
         if (isNaN(keyValue[i])) {
             res.json({'error!': 'You passed a non-number value into the parameters.'})
             return;
@@ -98,7 +97,7 @@ app.get('/math/divide', (req, res) => {
         } else {
             divString += `${keyValue[i]}`
         }
-        quotient = math.divide(keyValue[i], quotient)
+        quotient = math.divide(parseInt(keyValue[i]), quotient)
         if (isNaN(keyValue[i])) {
             res.json({'error!': 'You passed a non-number value into the parameters.' })
             return;
