@@ -10,6 +10,7 @@ app.get('/', (req, res) => {
 app.get('/math', (req, res) => {
     res.json({ message: ' you are on the math page',});
 });
+
 //-- Math add page
 app.get('/math/add', (req, res) => {
     let keyValue = Object.values(req.query);
@@ -31,10 +32,9 @@ app.get('/math/add', (req, res) => {
             return;
         }     
     }
-   //addition = math.add(sum["a"],sum["b"]);
     res.json({input: sum, sumString: sumString,sum: addition, });
-
 });
+
 //-- Math subtract page
 app.get('/math/subtract', (req, res) => {
     let keyValue = Object.values(req.query);
@@ -58,6 +58,7 @@ app.get('/math/subtract', (req, res) => {
     }
     res.json({ input: diff, subtractString: subtractString, diff: difference,});
 });
+
 //-- Math multiply page
 app.get('/math/multiply', (req, res) => {
     let keyValue = Object.values(req.query);
@@ -79,9 +80,9 @@ app.get('/math/multiply', (req, res) => {
             return;
         }
     }
-
     res.json({ input: multiple, prodString: prodString, product: product, });
 });
+
 //-- Math divide page
 app.get('/math/divide', (req, res) => {
     let keyValue = Object.values(req.query);
@@ -103,10 +104,9 @@ app.get('/math/divide', (req, res) => {
             return;
         }
     }
-    //quotient = math.divide(div["a"],div["b"]);
     res.json({input: div, divString: divString, quotient: quotient,});
 });
-
+// -- to get and send GIPHY API
 app.get('/gif/', (req,res) =>{
     const API_KEY = 'siIyo4w5mg0REENX76Sr57QTgkt3BWvY';
     let gifResult = []; 
